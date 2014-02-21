@@ -288,6 +288,7 @@ static void click_config_provider(void *context) {
   window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
   window_long_click_subscribe(BUTTON_ID_SELECT, 200,NULL, select_long_click_handler);
   window_long_click_subscribe(BUTTON_ID_UP, 200,NULL, up_long_click_handler);
+  window_long_click_subscribe(BUTTON_ID_UP, 200,NULL, down_long_click_handler);
 
 }
 
