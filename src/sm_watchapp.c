@@ -243,15 +243,42 @@ static void select_long_click_handler(ClickRecognizerRef recognizer, void *conte
 	}
 }
 
+
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
-	sendCommand(SM_OPEN_SIRI_KEY);
+	if (active_layer == MUSIC_LAYER) {
+		text_layer_set_text(text_date_layer, "Volume up" );
+		sendCommand(SM_VOLUME_UP_KEY);		
+	}
+	else {
+		text_layer_set_text(text_weather_cond_layer, "Updating..." ); 	
+		sendCommandInt(SM_SCREEN_ENTER_KEY, STATUS_SCREEN_APP);
+	}
+}
+
+static void up_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+
+	if (active_layer == MUSIC_LAYER) {
+		text_layer_set_text(text_date_layer, "Next track" );
+		sendCommand(SM_NEXT_TRACK_KEY);		
+	}
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-	text_layer_set_text(text_weather_cond_layer, "Updating..." ); 	
-	
-	sendCommandInt(SM_SCREEN_ENTER_KEY, STATUS_SCREEN_APP);
+	if (active_layer == MUSIC_LAYER) {
+		text_layer_set_text(text_date_layer, "Volume down" );
+		sendCommand(SM_VOLUME_DOWN_KEY);		
+	}
 }
+
+static void down_long_click_handler(ClickRecognizerRef recognizer, void *context) {
+
+	if (active_layer == MUSIC_LAYER) {
+		text_layer_set_text(text_date_layer, "Previous track" );
+		sendCommand(SM_PREVIOUS_TRACK_KEY);		
+	}
+}
+
+
 
 static void click_config_provider(void *context) {
 
@@ -259,7 +286,8 @@ static void click_config_provider(void *context) {
   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
   window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
   window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
-
+  window_long_click_subscribe(BUTTON_ID_SELECT, 200,NULL, select_long_click_handler);
+  window_long_click_subscribe(BUTTON_ID_UP, 200,NULL, up_long_click_handler);
 
 }
 
